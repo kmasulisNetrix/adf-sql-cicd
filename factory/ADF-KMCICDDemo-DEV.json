@@ -1,0 +1,9 @@
+{
+	"name": "ADF-KMCICDDemo-DEV",
+	"location": "eastus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "73e2987d-8af8-4663-9359-03ea1acf010a",
+		"tenantId": "de050dae-4b62-4b5c-9cf5-6f1ba5aba8d6"
+	}
+}
