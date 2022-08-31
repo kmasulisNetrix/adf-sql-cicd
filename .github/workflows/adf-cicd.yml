@@ -11,7 +11,7 @@ on:
   workflow_dispatch:
 
 env:
-  ResourceGroup: rg-kam
+  ResourceGroup: rg-adfdevops-demo
 
 permissions:
       id-token: write
@@ -38,7 +38,7 @@ jobs:
         with:
           name: adf-artifact
           path: ${{ steps.export.outputs.arm-template-directory }}
-
+          
   SIT_Deploy:
     runs-on: ubuntu-latest
     needs: build
@@ -68,11 +68,10 @@ jobs:
           resourceGroupName: ${{ env.ResourceGroup }}
           dataFactoryName: ADF-KMCICDDemo-SIT
           armTemplateFile: ARMTemplateForFactory.json
-          additionalParameters: 'AzureBlobStorageDestination_connectionString=${{ secrets.DEST_CONN_STRING }} AzureBlobStorageSource_connectionString=${{ secrets.SOURCE_CONN_STRING }}'
           
   UAT_Deploy:
     runs-on: ubuntu-latest
-    needs: build
+    needs: SIT_Deploy
     environment: UAT
     steps:
     
@@ -99,12 +98,11 @@ jobs:
           resourceGroupName: ${{ env.ResourceGroup }}
           dataFactoryName: ADF-KMCICDDemo-UAT
           armTemplateFile: ARMTemplateForFactory.json
-          additionalParameters: 'AzureBlobStorageDestination_connectionString=${{ secrets.DEST_CONN_STRING }} AzureBlobStorageSource_connectionString=${{ secrets.SOURCE_CONN_STRING }}'
           
   PROD_Deploy:
     runs-on: ubuntu-latest
-    needs: QA_Deploy
-    environment: Production
+    needs: UAT_Deploy
+    environment: PROD
     steps:
     
       # Downloading the artifact we uploaded earlier
@@ -123,11 +121,10 @@ jobs:
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
           enable-AzPSSession: true 
           
-      # Deploying to UAT environment
+      # Deploying to PROD environment
       - name: Deploy resources to Production
         uses: Azure/data-factory-deploy-action@v1.2.0
         with:
           resourceGroupName: ${{ env.ResourceGroup }}
           dataFactoryName: ADF-KMCICDDemo-PROD
           armTemplateFile: ARMTemplateForFactory.json
-          additionalParameters: 'AzureBlobStorageDestination_connectionString=${{ secrets.DEST_CONN_STRING }} AzureBlobStorageSource_connectionString=${{ secrets.SOURCE_CONN_STRING }}'
