@@ -68,6 +68,9 @@ jobs:
           resourceGroupName: ${{ env.ResourceGroup }}
           dataFactoryName: ADF-KMCICDDemo-SIT
           armTemplateFile: ARMTemplateForFactory.json
+      - name: PR Approve
+        uses: actions-cool/pr-approve@v0.0.1-beat
+
           
   UAT_Deploy:
     runs-on: ubuntu-latest
