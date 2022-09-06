@@ -3,8 +3,8 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "kopy data7",
-				"description": "Copy data77777777",
+				"name": "Copy data 2022 09",
+				"description": "Copy data 2022 09",
 				"type": "Copy",
 				"dependsOn": [],
 				"policy": {
