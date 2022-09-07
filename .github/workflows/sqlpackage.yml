@@ -1,0 +1,93 @@
+name: run-sqlpackage
+description: 'Runs SqlPackage command on a target database'
+
+inputs:
+  action:
+    description: 'Action parameter to run with SqlPackage. Supported values are: Publish, DeployReport, DriftReport, Script'
+    required: true
+  sourcepath:
+    description: 'The path where to look for the DACPAC file. If multiple files exists, all of them are processed'
+    required: true
+  profile:
+    description: 'The profile path to use during the execution. It has to be an xml file'
+    required: true
+  database-server:
+    description: 'Database server URL (without protocol). If not indicated in the publishing profile, it has to be indicated here.'
+    required: false
+    default: ''
+  database-name:
+    description: 'Database name. If not indicated in the publishing profile, it has to be indicated here.'
+    required: false
+    default: ''
+  authtoken:
+    description: 'The authentication token used to connect to the database, if credentials not indicated in the connection string'
+    required: false
+    default: ''
+  outputpath:
+    description: 'The output folder where assets will be generated if any'
+    required: false
+    default: .
+  outputfile:
+    description: 'The output file name. The final name of the file will be [dacpac_name].[outputfile]'
+    required: false
+    default: 'deployreport.xml' 
+    
+runs:
+  using: "composite"
+  steps:
+    - name: Installing SQL Data Tools
+      shell: bash
+      run: |
+        if test -f "/opt/sqlpackage/sqlpackage"; then
+          echo "::debug::SqlPackage already installed in the context"
+        else
+          sudo apt-get install libunwind8
+          wget -progress=bar:force -q -O sqlpackage.zip \
+            https://aka.ms/sqlpackage-linux \
+            && unzip -qq sqlpackage.zip -d /opt/sqlpackage \
+            && chmod a+x /opt/sqlpackage/sqlpackage \
+            && rm sqlpackage.zip
+        fi
+    - id: sqlpackage
+      name: Running SqlPackage tool
+      shell: bash
+      run: |
+        echo "::debug::Ensuring target folder '${{ inputs.outputpath }}'"
+        mkdir -p ${{ inputs.outputpath }}
+        
+        echo "::debug::Looking for dacpac files at '${{ inputs.sourcepath }}'"
+        PACKAGE_PATHS=$(find ${{ inputs.sourcepath }} -name '*.dacpac' -exec basename {} \;)
+
+        for PACKAGE in $PACKAGE_PATHS
+        do
+          echo "::debug::Runing ${{ inputs.action }} on package $PACKAGE"
+          SQLPACKAGE_CMD="/opt/sqlpackage/sqlpackage \
+              /Action:${{ inputs.action }} \
+              /SourceFile:${{ inputs.sourcepath }}/$PACKAGE \
+              /Profile:${{ inputs.profile }}"
+          
+          if [[ '${{ inputs.database-server }}' != '' ]]; then
+            SQLPACKAGE_CMD="$SQLPACKAGE_CMD \
+              /TargetServerName:${{ inputs.database-server }}"
+          fi
+
+          if [[ '${{ inputs.database-name }}' != '' ]]; then
+            SQLPACKAGE_CMD="$SQLPACKAGE_CMD \
+              /TargetDatabaseName:${{ inputs.database-name }}"
+          fi
+
+          if [[ '${{ inputs.authtoken }}' != '' ]]; then
+            SQLPACKAGE_CMD="$SQLPACKAGE_CMD \
+              /AccessToken:${{ inputs.authtoken }}"
+          fi
+
+          if [[ '${{ inputs.action }}' != 'Publish' ]]; then
+            PACKAGE_NAME="${PACKAGE%.*}"
+            SQLPACKAGE_CMD="$SQLPACKAGE_CMD \
+              /OutputPath:${{ inputs.outputpath }}/$PACKAGE_NAME.${{ inputs.outputfile }} \
+              /OverwriteFiles:True"
+          fi
+
+          echo "::debug::SqlPackage intruction is '$SQLPACKAGE_CMD'"
+          eval $SQLPACKAGE_CMD
+        done
