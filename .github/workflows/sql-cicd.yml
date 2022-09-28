@@ -3,6 +3,8 @@ name: CI/CD Pipeline
 
 on: 
   push:
+      paths:
+      - 'edw/**'
   workflow_dispatch:
 
   
