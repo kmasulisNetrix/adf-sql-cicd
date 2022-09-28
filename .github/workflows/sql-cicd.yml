@@ -1,5 +1,5 @@
 # .github/workflows/sql-deploy.yml
-name: CI/CD Pipeline
+name: SQL CICD
 
 on: 
   push:
