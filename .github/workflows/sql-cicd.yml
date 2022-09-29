@@ -14,7 +14,7 @@ jobs:
     steps:
     - uses: actions/checkout@v1
     
-    - run: dotnet build /p:NetCoreBuild=true /p:OutputPath=./Output ./DatabaseProjectTestDB.sqlproj
+    - run: dotnet build /p:NetCoreBuild=true /p:OutputPath=./Output ./adf-sql-cicd.sqlproj
     
     - uses: actions/upload-artifact@v3
       with:
@@ -37,7 +37,7 @@ jobs:
       - uses: azure/sql-action@v1.3
         with:
           connection-string: ${{ secrets.AZURE_SQL_CONNECTION_STRING }}
-          dacpac-package: './DatabaseProjectTestDB.dacpac'
+          dacpac-package: './adf-sql-cicd.dacpac'
           arguments: '/p:DropObjectsNotInSource=true'   # Optional parameters for SqlPackage Publish
           
   QA_Deploy:
@@ -56,7 +56,7 @@ jobs:
       - uses: azure/sql-action@v1.3
         with:
           connection-string: ${{ secrets.AZURE_SQL_CONNECTION_STRING }}
-          dacpac-package: './DatabaseProjectTestDB.dacpac'
+          dacpac-package: './adf-sql-cicd.dacpac'
           arguments: '/p:DropObjectsNotInSource=true'   # Optional parameters for SqlPackage Publish
           
   Prod_Deploy:
@@ -75,5 +75,5 @@ jobs:
       - uses: azure/sql-action@v1.3
         with:
           connection-string: ${{ secrets.AZURE_SQL_CONNECTION_STRING }}
-          dacpac-package: './DatabaseProjectTestDB.dacpac'
+          dacpac-package: './adf-sql-cicd.dacpac'
           arguments: '/p:DropObjectsNotInSource=true'   # Optional parameters for SqlPackage Publish
