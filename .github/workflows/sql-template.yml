@@ -24,8 +24,7 @@ jobs:
   # Job to build and publish the dacpac
   build:
     # Easier to use Github-hosted runner if updating in GitHub
-    # windows-2019 image works better for creating dacpacs at the moment
-    runs-on: windows-2019
+    runs-on: windows-latest
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
