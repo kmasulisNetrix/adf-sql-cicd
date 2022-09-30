@@ -10,6 +10,13 @@ on:
       - '**/Security/**'
   workflow_dispatch:
 
+env:
+  ResourceGroup: rg-adfdevops-demo
+
+permissions:
+      id-token: write
+      contents: read
+ 
 jobs:
   SIT_Deploy:
     runs-on: ubuntu-latest
