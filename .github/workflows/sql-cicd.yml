@@ -5,6 +5,9 @@ on:
   push:
       paths:
       - '**.sqlproj'
+      - '**/dbo/**'
+      - '**/SalesLT/**'
+      - '**/Security/**'
   workflow_dispatch:
 
   
@@ -14,7 +17,7 @@ jobs:
     steps:
     - uses: actions/checkout@v1
     
-    - run: dotnet build /p:NetCoreBuild=true /p:OutputPath=./Output ./adf-sql-cicd.sqlproj
+    - run: dotnet build /p:NetCoreBuild=true /p:OutputPath=./Output ./DatabaseProjectADFCICD.sqlproj
     
     - uses: actions/upload-artifact@v3
       with:
