@@ -71,13 +71,13 @@ jobs:
       # Installs dacpac
       # For this to work you MUST have two secrets specified, defaults in my repo are blank
       # One called AZURESQLDB_SERVER which contains your logical SQL Server name
-      # Another called AZURESQLDB_CONNECTION_STRING which contains connection string to your Azure SQL Database
+      # Another called AZURE_SQL_CONNECTION_STRING which contains connection string to your Azure SQL Database
       - name: Azure SQL Deploy
         uses: Azure/sql-action@v1.3
         with:
           # The logical SQL Server name
           server-name: '${{ secrets.AZURESQLDB_SERVER }}'
           # The connection string, including authentication information, for the Azure SQL Database.
-          connection-string: '${{ secrets.AZURESQLDB_CONNECTION_STRING }}'
+          connection-string: '${{ secrets.AZURE_SQL_CONNECTION_STRING }}'
           # Name of the dacpac file in the artifact
-          dacpac-package: 'AzureSQLDB.dacpac'
+          dacpac-package: 'DatabaseProjectADFCICD.dacpac'
