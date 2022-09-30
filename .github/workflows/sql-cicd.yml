@@ -15,10 +15,16 @@ jobs:
     runs-on: ubuntu-latest
     environment: SIT
     steps:
-    - uses: actions/checkout@v1
-    - uses: azure/login@v1                            # Azure login required to add a temporary firewall rule
+
+  # Logging in to Azure with OIDC
+    - name: 'Az CLI login'
+#      uses: actions/checkout@v1
+      uses: azure/login@v1                            # Azure login required to add a temporary firewall rule
       with:
-        creds: ${{ secrets.AZURE_CREDENTIALS }}
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          enable-AzPSSession: true 
     - uses: azure/sql-action@v2
       with:        
         connection-string: ${{ secrets.AZURE_SQL_CONNECTION_STRING }}
