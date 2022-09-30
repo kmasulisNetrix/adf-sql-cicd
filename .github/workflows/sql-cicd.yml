@@ -16,6 +16,9 @@ jobs:
     environment: SIT
     steps:
     - uses: actions/checkout@v1
+    - uses: azure/login@v1                            # Azure login required to add a temporary firewall rule
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
     - uses: azure/sql-action@v2
       with:        
         connection-string: ${{ secrets.AZURE_SQL_CONNECTION_STRING }}
@@ -23,4 +26,3 @@ jobs:
         action: 'publish'
         build-arguments: '-c Release'                 # Optional build options passed to dotnet build
         arguments: '/p:DropObjectsNotInSource=true'   # Optional properties and parameters for SqlPackage Publish
-          
