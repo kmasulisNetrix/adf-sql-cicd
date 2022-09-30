@@ -5,6 +5,19 @@ on:
   push:
     branches: 
       - main
+    paths:
+      - '**.sqlproj'
+      - '**/dbo/**'
+      - '**/SalesLT/**'
+      - '**/Security/**'
+  workflow_dispatch:
+
+env:
+  ResourceGroup: rg-adfdevops-demo
+
+permissions:
+      id-token: write
+      contents: read
 
 jobs:
 
@@ -24,17 +37,18 @@ jobs:
       # create dacpac using MSBUILD
       - name: Build Database project
         run: |
-          msbuild.exe AzureSQLDB.sqlproj /p:Configuration=Release
+          msbuild.exe DatabaseProjectADFCICD.sqlproj /p:Configuration=Release
       # Publish artifact
       - uses: actions/upload-artifact@v3.0.0
         with:
-          name: AzureSQLDB
+          name: DatabaseProjectADFCICD
           path: ${{ github.workspace }}/bin/Release/ 
 
   # Deploy dacpac job
   DeployAzureSQLDB:
     # Set the dependency for the build job
     needs: build
+    environment: SIT
     # Easier to use Github-hosted runner if updating in GitHub
     runs-on: windows-latest
 
@@ -46,7 +60,7 @@ jobs:
         # Dowloads Data artifact to dacpac folder
         uses: actions/download-artifact@v3.0.0
         with:
-          name: AzureSQLDB
+          name: DatabaseProjectADFCICD
           
       # Login using Azure credentials 
       # Required to add a temporary firewall rule for the runner
