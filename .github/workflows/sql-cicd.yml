@@ -19,16 +19,15 @@ permissions:
  
 jobs:
   SIT_Deploy:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     environment: SIT
     steps:
 
 # Logging in to Azure with OIDC
 # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-    - name: 'Check out repository'
-      uses: actions/checkout@v3
     - name: 'Az CLI login'
-      uses: azure/login@v1                            # Azure login required to add a temporary firewall rule
+    - uses: actions/checkout@v1
+    - uses: azure/login@v1                            # Azure login required to add a temporary firewall rule
       with:
           client-id: ${{ secrets.AZURE_CLIENT_ID }}
           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
