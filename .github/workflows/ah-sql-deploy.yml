@@ -19,10 +19,10 @@ jobs:
           name: dacpac-artifact
           path: ./Output
           
-  Dev_Deploy:
+  SIT_Deploy:
     runs-on: ubuntu-latest
     needs: build
-    environment: Dev
+    environment: SIT
     steps:
     
       # Downloading the artifact we uploaded earlier
