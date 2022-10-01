@@ -65,18 +65,18 @@ jobs:
           
       # Login using Azure credentials 
       # Required to add a temporary firewall rule for the runner
-#      - uses: azure/login@v1
-#        with:
-#          creds: ${{ secrets.AZURE_CREDENTIALS }}         
-
-      # Logging in to Azure with OIDC
-      - name: 'STEP 6 Az CLI login'
-        uses: azure/login@v1
+      - uses: azure/login@v1
         with:
-          client-id: ${{ secrets.AZURE_CLIENT_ID }}
-          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
-          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-          enable-AzPSSession: true 
+          creds: ${{ secrets.AZURE_CREDENTIALS }}         
+
+#      # Logging in to Azure with OIDC
+#      - name: 'STEP 6 Az CLI login'
+#        uses: azure/login@v1
+#        with:
+#          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+#          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+#          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+#          enable-AzPSSession: true 
           
       # Installs dacpac
       # For this to work you MUST have two secrets specified, defaults in my repo are blank
