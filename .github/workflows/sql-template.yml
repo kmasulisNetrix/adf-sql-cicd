@@ -27,18 +27,20 @@ jobs:
     runs-on: windows-2019
 
     # Steps represent a sequence of tasks that will be executed as part of the job
-    steps:
+    steps:                                                                    
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v2.3.4
-      # Find msbuild
-      - name: STEP 1 Add msbuild to PATH
+      - name: STEP 1 Check out repository                                                                                                                                            
+        uses: actions/checkout@v2.3.4
+      # Find msbuild                                      
+      - name: STEP 2 Add msbuild to PATH
         uses: microsoft/setup-msbuild@v1.1
       # create dacpac using MSBUILD
-      - name: STEP 2 Build Database project
+      - name: STEP 3 Build Database project
         run: |
           msbuild.exe DatabaseProjectADFCICD.sqlproj /p:Configuration=Release
       # Publish artifact
-      - uses: actions/upload-artifact@v3.0.0
+      - name: STEP 4 Publish artifact
+        uses: actions/upload-artifact@v3.0.0
         with:
           name: DatabaseProjectADFCICD
           path: ${{ github.workspace }}/bin/Release/ 
@@ -55,7 +57,7 @@ jobs:
     # To keep this example simple, the Firewall settings in the logical SQL Server allows access from Azure services and resources
     # An alternative is to use the Azure Login GitHub Action https://github.com/marketplace/actions/azure-login
     steps:
-      - name: STEP 3 download artifact containing dacpac
+      - name: STEP 5 download artifact containing dacpac
         # Dowloads Data artifact to dacpac folder
         uses: actions/download-artifact@v3.0.0
         with:
@@ -68,7 +70,7 @@ jobs:
 #          creds: ${{ secrets.AZURE_CREDENTIALS }}         
 
       # Logging in to Azure with OIDC
-      - name: 'STEP 4 Az CLI login'
+      - name: 'STEP 6 Az CLI login'
         uses: azure/login@v1
         with:
           client-id: ${{ secrets.AZURE_CLIENT_ID }}
@@ -80,7 +82,7 @@ jobs:
       # For this to work you MUST have two secrets specified, defaults in my repo are blank
       # One called AZURESQLDB_SERVER which contains your logical SQL Server name
       # Another called AZURE_SQL_CONNECTION_STRING which contains connection string to your Azure SQL Database
-      - name: STEP 5 Azure SQL Deploy
+      - name: STEP 7 Azure SQL Deploy
         uses: Azure/sql-action@v1.3
         with:
           # The logical SQL Server name
