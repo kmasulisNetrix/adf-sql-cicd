@@ -3,11 +3,6 @@ name: AH SQL CI/CD
 
 on: 
   push:
-    paths:
-      - '**.sqlproj'
-      - '**/dbo/**'
-      - '**/SalesLT/**'
-      - '**/Security/**'
   workflow_dispatch:
 
   
@@ -37,7 +32,7 @@ jobs:
           # Artifact name
           name: dacpac-artifact
           
-      - uses: azure/sql-action@v2
+      - uses: azure/sql-action@v1.3
         with:
           connection-string: ${{ secrets.AZURE_SQL_CONNECTION_STRING }}
           dacpac-package: './DatabaseProjectADFCICD.dacpac'
