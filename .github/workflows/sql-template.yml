@@ -49,7 +49,7 @@ jobs:
     needs: build
     environment: SIT
     # Easier to use Github-hosted runner if updating in GitHub
-    runs-on: windows-2019
+    runs-on: ubuntu-latest
 
     # Steps to deploy the updates to Azure SQL Database
     # To keep this example simple, the Firewall settings in the logical SQL Server allows access from Azure services and resources
