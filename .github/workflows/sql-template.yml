@@ -31,10 +31,10 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2.3.4
       # Find msbuild
-      - name: Add msbuild to PATH
+      - name: STEP 1 Add msbuild to PATH
         uses: microsoft/setup-msbuild@v1.1
       # create dacpac using MSBUILD
-      - name: Build Database project
+      - name: STEP 2 Build Database project
         run: |
           msbuild.exe DatabaseProjectADFCICD.sqlproj /p:Configuration=Release
       # Publish artifact
@@ -55,7 +55,7 @@ jobs:
     # To keep this example simple, the Firewall settings in the logical SQL Server allows access from Azure services and resources
     # An alternative is to use the Azure Login GitHub Action https://github.com/marketplace/actions/azure-login
     steps:
-      - name: download artifact containing dacpac
+      - name: STEP 3 download artifact containing dacpac
         # Dowloads Data artifact to dacpac folder
         uses: actions/download-artifact@v3.0.0
         with:
@@ -63,15 +63,24 @@ jobs:
           
       # Login using Azure credentials 
       # Required to add a temporary firewall rule for the runner
-      - uses: azure/login@v1
+#      - uses: azure/login@v1
+#        with:
+#          creds: ${{ secrets.AZURE_CREDENTIALS }}         
+
+      # Logging in to Azure with OIDC
+      - name: 'STEP 4 Az CLI login'
+        uses: azure/login@v1
         with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}         
-      
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          enable-AzPSSession: true 
+          
       # Installs dacpac
       # For this to work you MUST have two secrets specified, defaults in my repo are blank
       # One called AZURESQLDB_SERVER which contains your logical SQL Server name
       # Another called AZURE_SQL_CONNECTION_STRING which contains connection string to your Azure SQL Database
-      - name: Azure SQL Deploy
+      - name: STEP 5 Azure SQL Deploy
         uses: Azure/sql-action@v1.3
         with:
           # The logical SQL Server name
