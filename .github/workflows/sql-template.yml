@@ -1,4 +1,4 @@
-name: Update Azure SQL database
+name: Azure SQL CICD
 
 #Sets the trigger to update when update is pushed to main branch
 on:
@@ -83,11 +83,16 @@ jobs:
       # One called AZURESQLDB_SERVER which contains your logical SQL Server name
       # Another called AZURE_SQL_CONNECTION_STRING which contains connection string to your Azure SQL Database
       - name: STEP 7 Azure SQL Deploy
-        uses: Azure/sql-action@v1.3
+        uses: Azure/sql-action@v2
         with:
-          # The logical SQL Server name
-          server-name: '${{ secrets.AZURESQLDB_SERVER }}'
-          # The connection string, including authentication information, for the Azure SQL Database.
-          connection-string: '${{ secrets.AZURE_SQL_CONNECTION_STRING }}'
-          # Name of the dacpac file in the artifact
-          dacpac-package: 'DatabaseProjectADFCICD.dacpac'
+          connection-string: ${{ secrets.AZURE_SQL_CONNECTION_STRING }}
+          path: './DatabaseProjectADFCICD.dacpac'
+          action: 'publish'
+        
+#        with:
+#          # The logical SQL Server name
+#          server-name: '${{ secrets.AZURESQLDB_SERVER }}'
+#          # The connection string, including authentication information, for the Azure SQL Database.
+#          connection-string: '${{ secrets.AZURE_SQL_CONNECTION_STRING }}'
+#          # Name of the dacpac file in the artifact
+#          dacpac-package: 'DatabaseProjectADFCICD.dacpac'
