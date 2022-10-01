@@ -3,6 +3,11 @@ name: CI/CD Pipeline
 
 on: 
   push:
+    paths:
+      - '**.sqlproj'
+      - '**/dbo/**'
+      - '**/SalesLT/**'
+      - '**/Security/**'
   workflow_dispatch:
 
   
