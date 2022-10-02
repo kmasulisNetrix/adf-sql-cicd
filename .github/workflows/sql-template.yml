@@ -1,3 +1,4 @@
+# .github/workflows/ah-sql-template.yml
 name: Template Azure SQL CICD
 
 #Sets the trigger to update when update is pushed to main branch
