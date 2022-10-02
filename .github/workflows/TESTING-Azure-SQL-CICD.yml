@@ -46,6 +46,6 @@ jobs:
       - uses: Azure/sql-action@v2
         with:
           connection-string: ${{ secrets.AZURE_SQL_CONNECTION_STRING }}
-#          path: './DatabaseProjectADFCICD.dacpac'
-          path: './SalesLT/Views/*.sql'
+          path: './DatabaseProjectADFCICD.dacpac'
+#          path: './SalesLT/Views/*.sql'
           action: 'publish'
