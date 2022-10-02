@@ -33,11 +33,6 @@ jobs:
     # To keep this example simple, the Firewall settings in the logical SQL Server allows access from Azure services and resources
     # An alternative is to use the Azure Login GitHub Action https://github.com/marketplace/actions/azure-login
     steps:
-      - name: STEP 5 download artifact containing dacpac
-        # Dowloads Data artifact to dacpac folder
-        uses: actions/download-artifact@v3.0.0
-        with:
-          name: DatabaseProjectADFCICD
 
       - name: STEP 7 Azure SQL Deploy
       # Login using Azure credentials 
@@ -51,5 +46,6 @@ jobs:
       - uses: Azure/sql-action@v2
         with:
           connection-string: ${{ secrets.AZURE_SQL_CONNECTION_STRING }}
-          path: './DatabaseProjectADFCICD.dacpac'
+#          path: './DatabaseProjectADFCICD.dacpac'
+          path: './SalesLT/Views/*.sql'
           action: 'publish'
