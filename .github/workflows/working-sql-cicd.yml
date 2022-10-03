@@ -1,4 +1,4 @@
-# .github/workflows/ah-sql-template.yml
+# .github/workflows/working-sql-cicd.yml
 name: WORKING Azure SQL CICD
 
 #Sets the trigger to update when update is pushed to main branch
@@ -21,19 +21,6 @@ permissions:
       contents: read
 
 jobs:
-
-  connection_test:
-    name: Test Connectivity
-    runs-on: windows-latest
-    steps:
-      - name: Basic PowerShell commands 
-        env: 
-          MY_NAME: John Smith  
-        run: |
-           get-date
-           write-output $env:MY_NAME
-           Test-Connection "172.217.18.100" #resolves to www.google.com
-        shell: powershell 
 
   # Job to build and publish the dacpac
   build:
@@ -70,9 +57,15 @@ jobs:
         uses: actions/download-artifact@v3.0.0
         with:
           name: DatabaseProjectADFCICD
-      - name: STEP 7 Azure SQL Deploy
-      # Login using Azure credentials 
-      # Required to add a temporary firewall rule for the runner
+
+  deploy-to-sit:
+    needs: download-artifact
+    environment: SIT
+    runs-on: ubuntu-latest
+
+    # Steps to deploy the updates to Azure SQL Database
+    steps:
+      - name: STEP 6 Azure SQL Deploy
         uses: azure/login@v1
         with:
           client-id: ${{ secrets.AZURE_CLIENT_ID }}
@@ -84,14 +77,33 @@ jobs:
           path: './DatabaseProjectADFCICD.dacpac'
           action: 'publish'
 
-  deploy-to-sit:
-    needs: download-artifact
-    environment: SIT
+  deploy-to-uat:
+    needs: deploy-to-sit
+    environment: UAT
     runs-on: ubuntu-latest
 
     # Steps to deploy the updates to Azure SQL Database
     steps:
       - name: STEP 7 Azure SQL Deploy
+        uses: azure/login@v1
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+      - uses: Azure/sql-action@v2
+        with:
+          connection-string: ${{ secrets.AZURE_SQL_CONNECTION_STRING }}
+          path: './DatabaseProjectADFCICD.dacpac'
+          action: 'publish'
+
+  deploy-to-prod:
+    needs: deploy-to-uat
+    environment: PROD
+    runs-on: ubuntu-latest
+
+    # Steps to deploy the updates to Azure SQL Database
+    steps:
+      - name: STEP 8 Azure SQL Deploy
         uses: azure/login@v1
         with:
           client-id: ${{ secrets.AZURE_CLIENT_ID }}
