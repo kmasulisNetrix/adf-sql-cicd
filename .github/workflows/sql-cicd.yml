@@ -1,5 +1,5 @@
-# .github/workflows/working-sql-cicd.yml
-name: WORKING Azure SQL CICD
+# .github/workflows/sql-cicd.yml
+name: Azure SQL CICD
 
 #Sets the trigger to update when update is pushed to main branch
 on:
@@ -27,7 +27,13 @@ jobs:
     # Easier to use Github-hosted runner if updating in GitHub
     runs-on: windows-2019
     # Steps represent a sequence of tasks that will be executed as part of the job
-    steps:                                                                    
+    steps:
+    # Foresight 
+      - name: Collect Workflow Telemetry
+        uses: runforesight/foresight-workflow-kit-action@v1
+        if: success() || failure()
+        with:
+          api_key: a0360b4b-c027-4140-b8ed-7d071a03df30
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - name: STEP 1 Check out repository                                                                                                                                            
         uses: actions/checkout@v2.3.4
@@ -52,17 +58,19 @@ jobs:
 
     # Steps to deploy the updates to Azure SQL Database
     steps:
+    # Foresight 
+      - name: Collect Workflow Telemetry
+        uses: runforesight/foresight-workflow-kit-action@v1
+        if: success() || failure()
+        with:
+          api_key: a0360b4b-c027-4140-b8ed-7d071a03df30
+          
       - name: STEP 5 download artifact containing dacpac
         # Dowloads Data artifact to dacpac folder
         uses: actions/download-artifact@v3.0.0
         with:
           name: DatabaseProjectADFCICD
       - name: STEP 6 Azure SQL Deploy to SIT
-#        uses: azure/login@v1
-#        with:
-#          client-id: ${{ secrets.AZURE_CLIENT_ID }}
-#          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
-#          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
         uses: Azure/sql-action@v2
         with:
           connection-string: ${{ secrets.AZURE_SQL_CONNECTION_STRING }}
@@ -76,17 +84,19 @@ jobs:
 
     # Steps to deploy the updates to Azure SQL Database
     steps:
+    # Foresight 
+      - name: Collect Workflow Telemetry
+        uses: runforesight/foresight-workflow-kit-action@v1
+        if: success() || failure()
+        with:
+          api_key: a0360b4b-c027-4140-b8ed-7d071a03df30
+          
       - name: STEP 7 download artifact containing dacpac
         # Dowloads Data artifact to dacpac folder
         uses: actions/download-artifact@v3.0.0
         with:
           name: DatabaseProjectADFCICD
       - name: STEP 8 Azure SQL Deploy to UAT
-#        uses: azure/login@v1
-#        with:
-#          client-id: ${{ secrets.AZURE_CLIENT_ID }}
-#          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
-#          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
         uses: Azure/sql-action@v2
         with:
           connection-string: ${{ secrets.AZURE_SQL_CONNECTION_STRING }}
@@ -100,17 +110,19 @@ jobs:
 
     # Steps to deploy the updates to Azure SQL Database
     steps:
+    # Foresight 
+      - name: Collect Workflow Telemetry
+        uses: runforesight/foresight-workflow-kit-action@v1
+        if: success() || failure()
+        with:
+          api_key: a0360b4b-c027-4140-b8ed-7d071a03df30
+          
       - name: STEP 9 download artifact containing dacpac
         # Dowloads Data artifact to dacpac folder
         uses: actions/download-artifact@v3.0.0
         with:
           name: DatabaseProjectADFCICD
       - name: STEP 10 Azure SQL Deploy to PROD
-#        uses: azure/login@v1
-#        with:
-#          client-id: ${{ secrets.AZURE_CLIENT_ID }}
-#          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
-#          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
         uses: Azure/sql-action@v2
         with:
           connection-string: ${{ secrets.AZURE_SQL_CONNECTION_STRING }}
