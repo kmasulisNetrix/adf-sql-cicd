@@ -28,12 +28,6 @@ jobs:
     runs-on: windows-2019
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-    # Foresight 
-      - name: Collect Workflow Telemetry
-        uses: runforesight/foresight-workflow-kit-action@v1
-        if: success() || failure()
-        with:
-          api_key: a0360b4b-c027-4140-b8ed-7d071a03df30
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - name: STEP 1 Check out repository                                                                                                                                            
         uses: actions/checkout@v2.3.4
@@ -58,13 +52,6 @@ jobs:
 
     # Steps to deploy the updates to Azure SQL Database
     steps:
-    # Foresight 
-      - name: Collect Workflow Telemetry
-        uses: runforesight/foresight-workflow-kit-action@v1
-        if: success() || failure()
-        with:
-          api_key: a0360b4b-c027-4140-b8ed-7d071a03df30
-          
       - name: STEP 5 download artifact containing dacpac
         # Dowloads Data artifact to dacpac folder
         uses: actions/download-artifact@v3.0.0
@@ -84,13 +71,6 @@ jobs:
 
     # Steps to deploy the updates to Azure SQL Database
     steps:
-    # Foresight 
-      - name: Collect Workflow Telemetry
-        uses: runforesight/foresight-workflow-kit-action@v1
-        if: success() || failure()
-        with:
-          api_key: a0360b4b-c027-4140-b8ed-7d071a03df30
-          
       - name: STEP 7 download artifact containing dacpac
         # Dowloads Data artifact to dacpac folder
         uses: actions/download-artifact@v3.0.0
@@ -110,13 +90,6 @@ jobs:
 
     # Steps to deploy the updates to Azure SQL Database
     steps:
-    # Foresight 
-      - name: Collect Workflow Telemetry
-        uses: runforesight/foresight-workflow-kit-action@v1
-        if: success() || failure()
-        with:
-          api_key: a0360b4b-c027-4140-b8ed-7d071a03df30
-          
       - name: STEP 9 download artifact containing dacpac
         # Dowloads Data artifact to dacpac folder
         uses: actions/download-artifact@v3.0.0
