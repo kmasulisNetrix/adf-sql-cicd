@@ -57,7 +57,7 @@ jobs:
         uses: actions/download-artifact@v3.0.0
         with:
           name: DatabaseProjectADFCICD
-      - name: STEP 6 Azure SQL Deploy
+      - name: STEP 6 Azure SQL Deploy to SIT
         uses: azure/login@v1
         with:
           client-id: ${{ secrets.AZURE_CLIENT_ID }}
@@ -76,7 +76,12 @@ jobs:
 
     # Steps to deploy the updates to Azure SQL Database
     steps:
-      - name: STEP 7 Azure SQL Deploy
+      - name: STEP 7 download artifact containing dacpac
+        # Dowloads Data artifact to dacpac folder
+        uses: actions/download-artifact@v3.0.0
+        with:
+          name: DatabaseProjectADFCICD
+      - name: STEP 8 Azure SQL Deploy to UAT
         uses: azure/login@v1
         with:
           client-id: ${{ secrets.AZURE_CLIENT_ID }}
@@ -87,7 +92,7 @@ jobs:
           connection-string: ${{ secrets.AZURE_SQL_CONNECTION_STRING }}
           path: './DatabaseProjectADFCICD.dacpac'
           action: 'publish'
-
+          
   deploy-to-prod:
     needs: deploy-to-uat
     environment: PROD
@@ -95,7 +100,12 @@ jobs:
 
     # Steps to deploy the updates to Azure SQL Database
     steps:
-      - name: STEP 8 Azure SQL Deploy
+      - name: STEP 9 download artifact containing dacpac
+        # Dowloads Data artifact to dacpac folder
+        uses: actions/download-artifact@v3.0.0
+        with:
+          name: DatabaseProjectADFCICD
+      - name: STEP 10 Azure SQL Deploy to PROD
         uses: azure/login@v1
         with:
           client-id: ${{ secrets.AZURE_CLIENT_ID }}
