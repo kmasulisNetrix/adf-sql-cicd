@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Name>DatabaseProjectADFCICD</Name>
     <ProjectGuid>{C16E6A56-71BF-4C09-8EE0-EF716B3D75C2}</ProjectGuid>
-    <DSP>Microsoft.Data.Tools.Schema.Sql.Sql150DatabaseSchemaProvider</DSP>
+    <DSP>Microsoft.Data.Tools.Schema.Sql.SqlAzureV12DatabaseSchemaProvider</DSP>
     <ModelCollation>1033, CI</ModelCollation>
   </PropertyGroup>
   <Target Name="BeforeBuild">
