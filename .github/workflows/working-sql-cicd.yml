@@ -45,9 +45,9 @@ jobs:
           name: DatabaseProjectADFCICD
           path: ${{ github.workspace }}/bin/Release/ 
 
-  deploy-to-sit:
+  deploy-to-sit-uat:
     needs: build
-    environment: SIT
+    environment: UAT
     runs-on: ubuntu-latest
 
     # Steps to deploy the updates to Azure SQL Database
@@ -70,7 +70,7 @@ jobs:
           action: 'publish'
 
   deploy-to-uat:
-    needs: deploy-to-sit
+    needs: deploy-to-sit-uat
     environment: UAT
     runs-on: ubuntu-latest
 
