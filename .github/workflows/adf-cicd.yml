@@ -69,7 +69,7 @@ jobs:
           
   PROD_Deploy:
     runs-on: ubuntu-latest
-    needs: UAT_Deploy
+    needs: SIT_Deploy
     environment: PROD
     steps:
     
@@ -99,7 +99,7 @@ jobs:
           
   UAT_Deploy:
     runs-on: ubuntu-latest
-    needs: SIT_Deploy
+    needs: PROD_Deploy
     environment: UAT
     steps:
     
