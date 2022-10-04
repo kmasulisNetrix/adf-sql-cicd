@@ -1,4 +1,4 @@
-# .github/workflows/adf-cicd.yml
+# adf-cicd.yml
 name: Azure Data Factory CICD
 
 # Controls when the workflow will run
