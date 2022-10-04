@@ -1,4 +1,4 @@
-# adf-cicd.yml
+# .github/workflows/adf-cicd.yml
 
 name: Azure Data Factory CICD
 
@@ -24,13 +24,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - name: STEP 1 Check out repository
       - uses: actions/checkout@v3
         
-      - name: Export ARM Template
+      - name: STEP 2 Export ARM Template
         id: export
         uses: Azure/data-factory-export-action@v1.0.2
         
       # Uploading our artifact from adf_publish branch
+      - name: STEP 3 Upload artifact
       - uses: actions/upload-artifact@v3
         with:
           name: adf-artifact
