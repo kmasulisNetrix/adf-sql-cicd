@@ -45,14 +45,14 @@ jobs:
     steps:
     
       # Downloading the artifact we uploaded earlier
-      - name: Download a Build Artifact
+      - name: STEP 4 Download a Build Artifact
         uses: actions/download-artifact@v3.0.0
         with:
           # Artifact name
           name: adf-artifact
           
       # Logging in to Azure with OIDC
-      - name: 'Az CLI login'
+      - name: STEP 5 Az CLI login
         uses: azure/login@v1
         with:
            client-id: ${{ secrets.AZURE_CLIENT_ID }}
@@ -61,14 +61,12 @@ jobs:
            enable-AzPSSession: true 
           
       # Deploying to SIT environment
-      - name: Deploy resources to SIT
+      - name: STEP 6 Deploy resources to SIT
         uses: Azure/data-factory-deploy-action@v1.2.0
         with:
           resourceGroupName: ${{ env.ResourceGroup }}
           dataFactoryName: ADF-KMCICDDemo-SIT
           armTemplateFile: ARMTemplateForFactory.json
-      - name: PR Approve
-        uses: actions-cool/pr-approve@v0.0.1-beat
 
   UAT_Deploy:
     runs-on: ubuntu-latest
@@ -77,14 +75,14 @@ jobs:
     steps:
     
       # Downloading the artifact we uploaded earlier
-      - name: Download a Build Artifact
+      - name: STEP 7 Download a Build Artifact
         uses: actions/download-artifact@v3.0.0
         with:
           # Artifact name
           name: adf-artifact
       
       # Logging in to Azure with OIDC
-      - name: 'Az CLI login'
+      - name: STEP 8 Az CLI login
         uses: azure/login@v1
         with:
            client-id: ${{ secrets.AZURE_CLIENT_ID }}
@@ -93,7 +91,7 @@ jobs:
            enable-AzPSSession: true 
           
       # Deploying to UAT environment
-      - name: Deploy resources to UAT
+      - name: STEP 9 Deploy resources to UAT
         uses: Azure/data-factory-deploy-action@v1.2.0
         with:
           resourceGroupName: ${{ env.ResourceGroup }}
@@ -107,14 +105,14 @@ jobs:
     steps:
     
       # Downloading the artifact we uploaded earlier
-      - name: Download a Build Artifact
+      - name: STEP 10 Download a Build Artifact
         uses: actions/download-artifact@v3.0.0
         with:
           # Artifact name
           name: adf-artifact
           
       # Logging in to Azure with OIDC
-      - name: 'Az CLI login'
+      - name: STEP 11 Az CLI login
         uses: azure/login@v1
         with:
            client-id: ${{ secrets.AZURE_CLIENT_ID }}
@@ -123,7 +121,7 @@ jobs:
            enable-AzPSSession: true 
           
       # Deploying to PROD environment
-      - name: Deploy resources to Production
+      - name: STEP 12 Deploy resources to PROD
         uses: Azure/data-factory-deploy-action@v1.2.0
         with:
           resourceGroupName: ${{ env.ResourceGroup }}
