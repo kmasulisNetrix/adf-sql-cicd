@@ -48,11 +48,6 @@ jobs:
         with:
           # Artifact name
           name: adf-artifact
-
-#      - name: 'Az CLI login with subscription'
-#        uses: azure/login@v1
-#        with:
-#          creds: ${{ secrets.AZURE_CREDENTIALS }}
           
       # Logging in to Azure with OIDC
       - name: 'Az CLI login'
@@ -85,12 +80,7 @@ jobs:
         with:
           # Artifact name
           name: adf-artifact
-
-#      - name: 'Az CLI login with subscription'
-#        uses: azure/login@v1
-#        with:
-#          creds: ${{ secrets.AZURE_CREDENTIALS }}
-          
+      
       # Logging in to Azure with OIDC
       - name: 'Az CLI login'
         uses: azure/login@v1
@@ -120,11 +110,6 @@ jobs:
         with:
           # Artifact name
           name: adf-artifact
-
-#      - name: 'Az CLI login with subscription'
-#        uses: azure/login@v1
-#        with:
-#          creds: ${{ secrets.AZURE_CREDENTIALS }}
           
       # Logging in to Azure with OIDC
       - name: 'Az CLI login'
@@ -142,7 +127,3 @@ jobs:
           resourceGroupName: ${{ env.ResourceGroup }}
           dataFactoryName: ADF-KMCICDDemo-PROD
           armTemplateFile: ARMTemplateForFactory.json
-          
-
-          
-
