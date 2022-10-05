@@ -3,8 +3,8 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Copy data Story 001",
-				"description": "Copy data Story 001",
+				"name": "Pipeline1",
+				"description": "Testing CICD - pipeline1",
 				"type": "Copy",
 				"dependsOn": [],
 				"policy": {
