@@ -64,7 +64,7 @@ jobs:
 
       # Logging in to Azure with Azure Key Vault
       - name: STEP 5a Az CLI login (Azure Key Vault)
-      - uses: Azure/login@v1
+        uses: Azure/login@v1
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
       - name: STEP 5b Az CLI login (Azure Key Vault)
@@ -113,7 +113,7 @@ jobs:
 
       # Logging in to Azure with Azure Key Vault
       - name: STEP 8a Az CLI login (Azure Key Vault)
-      - uses: Azure/login@v1
+        uses: Azure/login@v1
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
       - name: STEP 8b Az CLI login (Azure Key Vault)
@@ -163,7 +163,7 @@ jobs:
 
       # Logging in to Azure with Azure Key Vault
       - name: STEP 11a Az CLI login (Azure Key Vault)
-      - uses: Azure/login@v1
+        uses: Azure/login@v1
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
       - name: STEP 11b Az CLI login (Azure Key Vault)
