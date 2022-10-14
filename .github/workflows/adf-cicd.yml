@@ -64,12 +64,16 @@ jobs:
 
       # Logging in to Azure with Azure Key Vault
       - name: STEP 5a Az CLI login (Azure Key Vault)
+      - uses: Azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+      - name: STEP 5b Az CLI login (Azure Key Vault)
         uses: Azure/get-keyvault-secrets@v1
         with: 
           keyvault: "ads-keyvault-kam"
           secrets: 'clientID, tenantID, subscriptionID'
         id: myGetSecretAction
-      - name: STEP 5b Az CLI login (Azure Key Vault)
+      - name: STEP 5c Az CLI login (Azure Key Vault)
         uses: Azure/login@v1
         with:
           client-id: ${{ steps.myGetSecretAction.outputs.clientID }}
@@ -99,7 +103,7 @@ jobs:
           name: adf-artifact
       
       # Logging in to Azure with OIDC
-#      - name: STEP 5 Az CLI login
+#      - name: STEP 8 Az CLI login
 #        uses: azure/login@v1
 #        with:
 #           client-id: ${{ secrets.AZURE_CLIENT_ID }}
@@ -108,13 +112,17 @@ jobs:
 #           enable-AzPSSession: true 
 
       # Logging in to Azure with Azure Key Vault
-      - name: STEP 5a Az CLI login (Azure Key Vault)
+      - name: STEP 8a Az CLI login (Azure Key Vault)
+      - uses: Azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+      - name: STEP 8b Az CLI login (Azure Key Vault)
         uses: Azure/get-keyvault-secrets@v1
         with: 
           keyvault: "ads-keyvault-kam"
           secrets: 'clientID, tenantID, subscriptionID'
         id: myGetSecretAction
-      - name: STEP 5b Az CLI login (Azure Key Vault)
+      - name: STEP 8c Az CLI login (Azure Key Vault)
         uses: Azure/login@v1
         with:
           client-id: ${{ steps.myGetSecretAction.outputs.clientID }}
@@ -154,13 +162,17 @@ jobs:
 #           enable-AzPSSession: true 
 
       # Logging in to Azure with Azure Key Vault
-      - name: STEP 5a Az CLI login (Azure Key Vault)
+      - name: STEP 11a Az CLI login (Azure Key Vault)
+      - uses: Azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+      - name: STEP 11b Az CLI login (Azure Key Vault)
         uses: Azure/get-keyvault-secrets@v1
         with: 
           keyvault: "ads-keyvault-kam"
           secrets: 'clientID, tenantID, subscriptionID'
         id: myGetSecretAction
-      - name: STEP 5b Az CLI login (Azure Key Vault)
+      - name: STEP 11c Az CLI login (Azure Key Vault)
         uses: Azure/login@v1
         with:
           client-id: ${{ steps.myGetSecretAction.outputs.clientID }}
