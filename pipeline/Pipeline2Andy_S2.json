@@ -4,7 +4,7 @@
 		"activities": [
 			{
 				"name": "Pipeline2Andy_S2",
-				"description": "Testing CICD - pipeline1",
+				"description": "Testing CICD - pipeline2",
 				"type": "Copy",
 				"dependsOn": [],
 				"policy": {
