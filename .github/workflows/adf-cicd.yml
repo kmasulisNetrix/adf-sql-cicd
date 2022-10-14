@@ -9,6 +9,9 @@ on:
     paths-ignore:
       - '**.md'
       - '**.sqlproj'
+      - '**/dbo/**'
+      - '**/SalesLT/**'
+      - '**/Security/**'
       - '**.xml'
       - '**/.github/workflows/**'
   workflow_dispatch:
