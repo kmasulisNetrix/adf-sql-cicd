@@ -63,15 +63,19 @@ jobs:
 #           enable-AzPSSession: true 
 
       # Logging in to Azure with Azure Key Vault
-      - name: STEP 5 Az CLI login (Azure Key Vault)
-        uses: Azure/login@v1
-        with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
-      - uses: Azure/get-keyvault-secrets@v1
+      - name: STEP 5a Az CLI login (Azure Key Vault)
+        uses: Azure/get-keyvault-secrets@v1
         with: 
           keyvault: "ads-keyvault-kam"
           secrets: 'clientID, tenantID, subscriptionID'
         id: myGetSecretAction
+      - name: STEP 5b Az CLI login (Azure Key Vault)
+        uses: Azure/login@v1
+        with:
+          client-id: ${{ steps.myGetSecretAction.outputs.clientID }}
+          tenant-id: ${{ steps.myGetSecretAction.outputs.tenantID }}
+          subscription-id: ${{ steps.myGetSecretAction.outputs.subscriptionID }}
+          enable-AzPSSession: true
           
       # Deploying to SIT environment
       - name: STEP 6 Deploy resources to SIT
@@ -104,15 +108,20 @@ jobs:
 #           enable-AzPSSession: true 
 
       # Logging in to Azure with Azure Key Vault
-      - name: STEP 5 Az CLI login (Azure Key Vault)
-        uses: Azure/login@v1
-        with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
-      - uses: Azure/get-keyvault-secrets@v1
+      - name: STEP 5a Az CLI login (Azure Key Vault)
+        uses: Azure/get-keyvault-secrets@v1
         with: 
           keyvault: "ads-keyvault-kam"
           secrets: 'clientID, tenantID, subscriptionID'
         id: myGetSecretAction
+      - name: STEP 5b Az CLI login (Azure Key Vault)
+        uses: Azure/login@v1
+        with:
+          client-id: ${{ steps.myGetSecretAction.outputs.clientID }}
+          tenant-id: ${{ steps.myGetSecretAction.outputs.tenantID }}
+          subscription-id: ${{ steps.myGetSecretAction.outputs.subscriptionID }}
+          enable-AzPSSession: true
+
           
       # Deploying to UAT environment
       - name: STEP 9 Deploy resources to UAT
@@ -145,15 +154,20 @@ jobs:
 #           enable-AzPSSession: true 
 
       # Logging in to Azure with Azure Key Vault
-      - name: STEP 5 Az CLI login (Azure Key Vault)
-        uses: Azure/login@v1
-        with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
-      - uses: Azure/get-keyvault-secrets@v1
+      - name: STEP 5a Az CLI login (Azure Key Vault)
+        uses: Azure/get-keyvault-secrets@v1
         with: 
           keyvault: "ads-keyvault-kam"
           secrets: 'clientID, tenantID, subscriptionID'
         id: myGetSecretAction
+      - name: STEP 5b Az CLI login (Azure Key Vault)
+        uses: Azure/login@v1
+        with:
+          client-id: ${{ steps.myGetSecretAction.outputs.clientID }}
+          tenant-id: ${{ steps.myGetSecretAction.outputs.tenantID }}
+          subscription-id: ${{ steps.myGetSecretAction.outputs.subscriptionID }}
+          enable-AzPSSession: true
+
           
       # Deploying to PROD environment
       - name: STEP 12 Deploy resources to PROD
