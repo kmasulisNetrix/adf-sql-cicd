@@ -54,13 +54,24 @@ jobs:
           name: adf-artifact
           
       # Logging in to Azure with OIDC
-      - name: STEP 5 Az CLI login
-        uses: azure/login@v1
+#      - name: STEP 5 Az CLI login
+#        uses: azure/login@v1
+#        with:
+#           client-id: ${{ secrets.AZURE_CLIENT_ID }}
+#           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+#           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+#           enable-AzPSSession: true 
+
+      # Logging in to Azure with Azure Key Vault
+      - name: STEP 5 Az CLI login (Azure Key Vault)
+        uses: Azure/login@v1
         with:
-           client-id: ${{ secrets.AZURE_CLIENT_ID }}
-           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
-           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-           enable-AzPSSession: true 
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+      - uses: Azure/get-keyvault-secrets@v1
+        with: 
+          keyvault: "ads-keyvault-kam"
+          secrets: 'clientID, tenantID, subscriptionID'
+        id: myGetSecretAction
           
       # Deploying to SIT environment
       - name: STEP 6 Deploy resources to SIT
@@ -84,13 +95,24 @@ jobs:
           name: adf-artifact
       
       # Logging in to Azure with OIDC
-      - name: STEP 8 Az CLI login
-        uses: azure/login@v1
+#      - name: STEP 5 Az CLI login
+#        uses: azure/login@v1
+#        with:
+#           client-id: ${{ secrets.AZURE_CLIENT_ID }}
+#           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+#           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+#           enable-AzPSSession: true 
+
+      # Logging in to Azure with Azure Key Vault
+      - name: STEP 5 Az CLI login (Azure Key Vault)
+        uses: Azure/login@v1
         with:
-           client-id: ${{ secrets.AZURE_CLIENT_ID }}
-           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
-           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-           enable-AzPSSession: true 
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+      - uses: Azure/get-keyvault-secrets@v1
+        with: 
+          keyvault: "ads-keyvault-kam"
+          secrets: 'clientID, tenantID, subscriptionID'
+        id: myGetSecretAction
           
       # Deploying to UAT environment
       - name: STEP 9 Deploy resources to UAT
@@ -114,13 +136,24 @@ jobs:
           name: adf-artifact
           
       # Logging in to Azure with OIDC
-      - name: STEP 11 Az CLI login
-        uses: azure/login@v1
+#      - name: STEP 5 Az CLI login
+#        uses: azure/login@v1
+#        with:
+#           client-id: ${{ secrets.AZURE_CLIENT_ID }}
+#           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+#           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+#           enable-AzPSSession: true 
+
+      # Logging in to Azure with Azure Key Vault
+      - name: STEP 5 Az CLI login (Azure Key Vault)
+        uses: Azure/login@v1
         with:
-           client-id: ${{ secrets.AZURE_CLIENT_ID }}
-           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
-           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-           enable-AzPSSession: true 
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+      - uses: Azure/get-keyvault-secrets@v1
+        with: 
+          keyvault: "ads-keyvault-kam"
+          secrets: 'clientID, tenantID, subscriptionID'
+        id: myGetSecretAction
           
       # Deploying to PROD environment
       - name: STEP 12 Deploy resources to PROD
