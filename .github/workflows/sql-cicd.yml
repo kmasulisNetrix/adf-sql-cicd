@@ -47,7 +47,7 @@ jobs:
 
   deploy-to-sit:
     needs: build
-    environment: SIT
+    environment: sql_SIT
     runs-on: ubuntu-latest
 
     # Steps to deploy the updates to Azure SQL Database
@@ -66,7 +66,7 @@ jobs:
 
   deploy-to-uat:
     needs: deploy-to-sit
-    environment: UAT
+    environment: sql_UAT
     runs-on: ubuntu-latest
 
     # Steps to deploy the updates to Azure SQL Database
@@ -85,7 +85,7 @@ jobs:
           
   deploy-to-prod:
     needs: deploy-to-uat
-    environment: PROD
+    environment: sql_PROD
     runs-on: ubuntu-latest
 
     # Steps to deploy the updates to Azure SQL Database
