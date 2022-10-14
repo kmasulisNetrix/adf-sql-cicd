@@ -4,7 +4,7 @@
 		"activities": [
 			{
 				"name": "Pipeline4Barb_S5",
-				"description": "Testing CICD - pipeline1",
+				"description": "Testing CICD - Pipeline4Barb_S5",
 				"type": "Copy",
 				"dependsOn": [],
 				"policy": {
