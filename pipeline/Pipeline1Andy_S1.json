@@ -3,8 +3,8 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Pipeline1Andy_S1",
-				"description": "Testing CICD - pipeline1",
+				"name": "TEST1_Pipeline1Andy_S1",
+				"description": "Testing how artifacts 'affect' each other ",
 				"type": "Copy",
 				"dependsOn": [],
 				"policy": {
